@@ -1,10 +1,8 @@
 import "./App.css";
-import Navbar from "./Components/Navbar/Navbar";
+import Navbar from "./Components/Navbar";
 import { Routes, Route } from "react-router-dom";
-import Home from "./Pages/Home/HomePage";
-import Services from "./Pages/Services/ServicesPage";
-import About from "./Pages/About/AboutPage";
-import Contact from "./Pages/Contact/ContactPage";
+import Home from "./Pages/HomePage";
+import Shop from "./Components/Shop";
 
 function App() {
   return (
@@ -13,9 +11,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="" element={<Home />} />
-          <Route path="services" element={<Services />} />
-          <Route path="about" element={<About />} />
-          <Route path="contact" element={<Contact />} />
+          <Route path="shop/:shopId" element={<Shop />} />
           <Route path="*" element={<>404 Not found</>} />
         </Routes>
       </div>
