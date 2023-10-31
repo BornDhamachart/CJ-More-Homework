@@ -27,7 +27,7 @@ const ModalShopCheck: React.FC<Props> = ({
 
   return (
     <Modal
-      title="test"
+      title="Check picture"
       open={isModalShopCheckVisible}
       width={800}
       onCancel={() => {
@@ -37,26 +37,22 @@ const ModalShopCheck: React.FC<Props> = ({
       destroyOnClose
     >
       <>
-   
-          
-          <Image width={"100%"} height={400} src="/public/shelft1.jpeg" />
-          
-      
-        <div>
-      <TextArea
-        placeholder="Comment"
-        autoSize={{ minRows: 3, maxRows: 6 }}
-      />
+        <div className="grid grid-cols-2 gap-4 overflow-y-auto max-h-96">
+          {imageUrl.map((r) => (
+            <Image width={"100%"} height={160} src={r.url} />
+          ))}
         </div>
-        <div className="tw-flex tw-justify-center tw-w-full tw-gap-4 tw-pt-6">
-                <Button
-                >
-                  Approve
-                </Button>
-                <Button>
-                  Reject
-                </Button>
-            </div>
+
+        <div className="mt-6">
+          <TextArea
+            placeholder="Comment"
+            autoSize={{ minRows: 3, maxRows: 6 }}
+          />
+        </div>
+        <div className="flex justify-center w-full gap-4 mt-6">
+          <Button className="bg-green-400 w-1/2">Approve</Button>
+          <Button className="bg-red-400 w-1/2">Reject</Button>
+        </div>
       </>
     </Modal>
   );

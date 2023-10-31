@@ -4,16 +4,16 @@ import { UploadOutlined } from "@ant-design/icons";
 import type { UploadFile } from "antd/es/upload/interface";
 
 interface Props {
-  isModalShopCheckVisible: boolean;
-  setIsModalShopCheckVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  isModalShopCreateVisible: boolean;
+  setIsModalShopCreateVisible: React.Dispatch<React.SetStateAction<boolean>>;
   chooseShelftId: string;
   isSubmitFinish: boolean;
   setIsSubmitFinish: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalShopCheck: React.FC<Props> = ({
-  isModalShopCheckVisible,
-  setIsModalShopCheckVisible,
+const ModalShopCreate: React.FC<Props> = ({
+  isModalShopCreateVisible,
+  setIsModalShopCreateVisible,
   chooseShelftId,
   isSubmitFinish,
   setIsSubmitFinish,
@@ -35,11 +35,11 @@ const ModalShopCheck: React.FC<Props> = ({
 
   return (
     <Modal
-      title="test"
-      open={isModalShopCheckVisible}
+      title="Upload shelft picture"
+      open={isModalShopCreateVisible}
       width={800}
       onCancel={() => {
-        setIsModalShopCheckVisible(false);
+        setIsModalShopCreateVisible(false);
       }}
       footer={null}
       destroyOnClose
@@ -55,31 +55,13 @@ const ModalShopCheck: React.FC<Props> = ({
         </Upload>
 
         <div className="mt-10">
-          <Form
-            // form={form}
-            preserve={false}
-            // onFinish={onSubmitForm}
-            autoComplete="off"
-            scrollToFirstError={true}
-          >
-            <Form.Item label="Comment" name="comment">
-              <Input />
-            </Form.Item>
-
-            <div className="tw-flex tw-justify-center tw-w-full tw-gap-4 tw-pt-6">
-                <Button
-                >
-                  Approve
-                </Button>
-                <Button>
-                  Reject
-                </Button>
-            </div>
-          </Form>
+          <div className="w-full flex justify-end">
+            <Button>Save</Button>
+          </div>
         </div>
       </>
     </Modal>
   );
 };
 
-export default ModalShopCheck;
+export default ModalShopCreate;
