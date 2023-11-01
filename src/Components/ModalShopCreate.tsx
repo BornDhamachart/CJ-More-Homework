@@ -44,12 +44,12 @@ const ModalShopCreate: React.FC<Props> = ({
           ?.picture_url,
       },
     ];
-  } else {fileList = []}
+  }
 
   const addPicture = (picture: string, name: string) => {
     const updateShelf = shelfData[0]?.shelves?.map((shelf) => {
-    console.log("shelf.no", shelf.no);
-    console.log("chooseShelfId", chooseShelfId);
+      console.log("shelf.no", shelf.no);
+      console.log("chooseShelfId", chooseShelfId);
 
       if (shelf.no === chooseShelfId) {
         return {
@@ -76,7 +76,8 @@ const ModalShopCreate: React.FC<Props> = ({
   };
 
   const handleUploadPicture = () => {
-    const file = inputPicture.file.originFileObj;
+    const file = inputPicture.file;
+
     if (file) {
       const reader = new FileReader();
       reader.onload = function (e: any) {
@@ -102,6 +103,7 @@ const ModalShopCreate: React.FC<Props> = ({
           listType="picture"
           defaultFileList={[...fileList]}
           maxCount={1}
+          beforeUpload={() => false}
           onChange={(e) => {
             setInputPicture(e);
           }}
