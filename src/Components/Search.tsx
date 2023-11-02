@@ -1,13 +1,14 @@
 import React from "react";
 import { Button, Form, Input, Select } from "antd";
 import provinceCode from "../Data/ProvinceCode.json";
-import { FilterProps } from "../interface";
+import { FilterProps, Province } from "../interface";
+import { BiSearchAlt } from "react-icons/bi";
 
-interface SearchComponentProps {
+interface Props {
   setFilters: React.Dispatch<React.SetStateAction<FilterProps>>;
 }
 
-const Search = ({ setFilters }: SearchComponentProps) => {
+const Search: React.FC<Props> = ({ setFilters }) => {
   const [form] = Form.useForm<FilterProps>();
 
   const searchInitialValue = {
@@ -15,14 +16,12 @@ const Search = ({ setFilters }: SearchComponentProps) => {
     province: "",
   }
 
-  //Form handling
   const onSubmitForm = (data: FilterProps) => {
     setFilters((prevState) => ({
       ...prevState,
       name: data.name,
       province: data.province,
     }));
-    console.log("Search data", data);
   };
 
   const onReset = () => {
@@ -37,12 +36,13 @@ const Search = ({ setFilters }: SearchComponentProps) => {
       onFinish={onSubmitForm}
       initialValues={searchInitialValue}
       autoComplete="off"
-    //   className="px-16 mt-6"
     >
       <div className="flex w-full gap-4">
+        <div className="text-2xl pt-1">
+        <BiSearchAlt />
+        </div>
         <Form.Item name="name" className="w-2/3" label="Shop name">
           <Input 
-        //   placeholder="Shop name"
           >
 
           </Input>
@@ -51,12 +51,11 @@ const Search = ({ setFilters }: SearchComponentProps) => {
           <Select
             allowClear
             showSearch
-            // placeholder="Choose province"
             filterOption={(input, option) =>
               (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
             }
             optionFilterProp="children"
-            options={provinceCode?.map((r: any) => ({
+            options={provinceCode?.map((r: Province) => ({
               value: r.id,
               label: r.name_th,
             }))}

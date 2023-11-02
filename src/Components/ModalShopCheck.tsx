@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Button, Form, Input, Modal, Upload, Image } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import type { UploadFile } from "antd/es/upload/interface";
+import React, { useState } from "react";
+import { Button, Input, Modal, Image } from "antd";
 import { ShelfData } from "../interface";
 import { useParams } from "react-router-dom";
 
@@ -9,38 +7,36 @@ interface Props {
   isModalShopCheckVisible: boolean;
   setIsModalShopCheckVisible: React.Dispatch<React.SetStateAction<boolean>>;
   chooseShelfId: string;
-  isSubmitFinish: boolean;
-  setIsSubmitFinish: React.Dispatch<React.SetStateAction<boolean>>;
   shelfData: ShelfData[];
   setShelfData: React.Dispatch<React.SetStateAction<any>>;
+  setIsSubmitFinished: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const ModalShopCheck: React.FC<Props> = ({
   isModalShopCheckVisible,
   setIsModalShopCheckVisible,
   chooseShelfId,
-  isSubmitFinish,
-  setIsSubmitFinish,
   shelfData,
   setShelfData,
+  setIsSubmitFinished
 }) => {
   const { TextArea } = Input;
   const [inputComment, setInputComment] = useState("");
-
   const params = useParams();
   const shopId = params.shopId;
+  const matchedShelf = shelfData?.find((item : ShelfData) => item.branch_code === Number(shopId))?.shelves
 
   const approve = () => {
-    const updateShelf = shelfData[0]?.shelves?.map((shelf) => {
+    const updateShelf = matchedShelf?.map((shelf) => {
       if (shelf.no === chooseShelfId) {
-        return { ...shelf, comment: inputComment, status: "approved" };
+        return { ...shelf, comment: inputComment, status: "Approved" };
       }
       return shelf;
     });
-    console.log("updateShelf", updateShelf);
+    // console.log("updateShelf", updateShelf);
 
-    setShelfData((prevState: any) => {
-      return prevState.map((r: any) => {
+    setShelfData((prevState: ShelfData[]) => {
+      return prevState.map((r: ShelfData) => {
         if (r.branch_code === Number(shopId)) {
           return { ...r, shelves: updateShelf };
         }
@@ -48,19 +44,20 @@ const ModalShopCheck: React.FC<Props> = ({
       });
     });
     setIsModalShopCheckVisible(false);
+    setIsSubmitFinished(true);
   };
 
   const reject = () => {
-    const updateShelf = shelfData[0]?.shelves?.map((shelf) => {
+    const updateShelf = matchedShelf?.map((shelf) => {
       if (shelf.no === chooseShelfId) {
-        return { ...shelf, comment: inputComment, status: "rejected" };
+        return { ...shelf, comment: inputComment, status: "Rejected" };
       }
       return shelf;
     });
-    console.log("updateShelf", updateShelf);
+    // console.log("updateShelf", updateShelf);
 
-    setShelfData((prevState: any) => {
-      return prevState.map((r: any) => {
+    setShelfData((prevState: ShelfData[]) => {
+      return prevState.map((r: ShelfData) => {
         if (r.branch_code === Number(shopId)) {
           return { ...r, shelves: updateShelf };
         }
@@ -68,6 +65,7 @@ const ModalShopCheck: React.FC<Props> = ({
       });
     });
     setIsModalShopCheckVisible(false);
+    setIsSubmitFinished(true);
   };
 
   return (
@@ -87,7 +85,7 @@ const ModalShopCheck: React.FC<Props> = ({
             width={"75%"}
             height={"100%"}
             src={
-              shelfData[0]?.shelves?.filter((r) => r.no === chooseShelfId)[0]
+              matchedShelf?.filter((r) => r.no === chooseShelfId)[0]
                 ?.picture_url
             }
             preview={false}
@@ -96,7 +94,7 @@ const ModalShopCheck: React.FC<Props> = ({
         <div className="mt-1">
           Upload date :{" "}
           {
-            shelfData[0]?.shelves?.filter((r) => r.no === chooseShelfId)[0]
+            matchedShelf?.filter((r) => r.no === chooseShelfId)[0]
               ?.picture_upload_date
           }
         </div>
@@ -104,6 +102,8 @@ const ModalShopCheck: React.FC<Props> = ({
           <TextArea
             placeholder="Comment"
             autoSize={{ minRows: 3, maxRows: 6 }}
+            defaultValue={ matchedShelf?.filter((r) => r.no === chooseShelfId)[0]
+              ?.comment}
             onChange={(e) => {
               setInputComment(e.target.value);
             }}

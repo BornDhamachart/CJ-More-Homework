@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Button, Modal, Upload } from "antd";
+import React, { useState } from "react";
+import { Button, Modal, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import type { UploadFile } from "antd/es/upload/interface";
-import { ShelfData } from "../interface";
+import { Shelf, ShelfData } from "../interface";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 
@@ -10,10 +10,9 @@ interface Props {
   isModalShopCreateVisible: boolean;
   setIsModalShopCreateVisible: React.Dispatch<React.SetStateAction<boolean>>;
   chooseShelfId: string;
-  isSubmitFinish: boolean;
-  setIsSubmitFinish: React.Dispatch<React.SetStateAction<boolean>>;
   shelfData: ShelfData[];
   setShelfData: React.Dispatch<React.SetStateAction<any>>;
+  setIsSubmitFinished: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const ModalShopCreate: React.FC<Props> = ({
@@ -22,39 +21,37 @@ const ModalShopCreate: React.FC<Props> = ({
   chooseShelfId,
   shelfData,
   setShelfData,
+  setIsSubmitFinished
 }) => {
   const [inputPicture, setInputPicture] = useState<any>();
-
   const params = useParams();
   const shopId = params.shopId;
+  const matchedShelf = shelfData?.find((item : ShelfData) => item.branch_code === Number(shopId))?.shelves
 
-  let fileList: UploadFile[] = [];
+  let fileList : UploadFile[] = [];
 
   if (
-    shelfData[0]?.shelves?.filter((r) => r.no === chooseShelfId)[0]
-      ?.picture_url !== ""
+    !!(matchedShelf?.filter((r:Shelf) => r.no === chooseShelfId)[0]?.picture_url) && !!(matchedShelf?.filter((r:any) => r.no === chooseShelfId)[0]?.picture_name)
   ) {
     fileList = [
       {
         uid: "1",
-        name: shelfData[0]?.shelves?.filter((r) => r.no === chooseShelfId)[0]
-          ?.picture_name,
+        name: matchedShelf?.filter((r:Shelf) => r.no === chooseShelfId)[0]?.picture_name,
         status: "done",
-        url: shelfData[0]?.shelves?.filter((r) => r.no === chooseShelfId)[0]
-          ?.picture_url,
+        url: matchedShelf?.filter((r:Shelf) => r.no === chooseShelfId)[0]?.picture_url,
       },
     ];
   }
 
   const addPicture = (picture: string, name: string) => {
-    const updateShelf = shelfData[0]?.shelves?.map((shelf) => {
+    const updateShelf = matchedShelf?.map((shelf : Shelf) => {
       console.log("shelf.no", shelf.no);
       console.log("chooseShelfId", chooseShelfId);
 
       if (shelf.no === chooseShelfId) {
         return {
           ...shelf,
-          status: "pending",
+          status: "Pending",
           picture_name: name,
           picture_url: picture,
           picture_upload_date: moment(new Date()).format("DD-MM-YYYY HH:mm:ss"),
@@ -64,8 +61,8 @@ const ModalShopCreate: React.FC<Props> = ({
     });
     console.log("updateShelf", updateShelf);
 
-    setShelfData((prevState: any) => {
-      return prevState.map((r: any) => {
+    setShelfData((prevState: ShelfData[]) => {
+      return prevState.map((r: ShelfData) => {
         if (r.branch_code === Number(shopId)) {
           return { ...r, shelves: updateShelf };
         }
@@ -73,18 +70,22 @@ const ModalShopCreate: React.FC<Props> = ({
       });
     });
     setIsModalShopCreateVisible(false);
+    setIsSubmitFinished(true)
   };
 
   const handleUploadPicture = () => {
     const file = inputPicture.file;
-
     if (file) {
+      if (file.size < 1 * 1024 * 1024) {
       const reader = new FileReader();
       reader.onload = function (e: any) {
         addPicture(e.target.result, file.name);
       };
       reader.readAsDataURL(file);
+    } else {
+      message.error("Image must smaller than 1 MB!!!")
     }
+  }
   };
 
   return (

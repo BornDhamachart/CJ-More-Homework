@@ -1,37 +1,43 @@
 import React from "react";
 import { Popover, Button } from "antd";
 import { AiOutlinePicture } from "react-icons/ai";
-import { ShelfData } from "../interface";
+import { Shelf, ShelfData } from "../interface";
+import { useParams } from "react-router-dom";
 
 interface Props {
-  isModalShopCreateVisible: boolean;
   setIsModalShopCreateVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isModalShopCheckVisible: boolean;
   setIsModalShopCheckVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setChooseShelfId: React.Dispatch<React.SetStateAction<string>>;
   shelfData: ShelfData[];
 }
 
 const ShopLayout: React.FC<Props> = ({
-  isModalShopCreateVisible,
   setIsModalShopCreateVisible,
-  isModalShopCheckVisible,
   setIsModalShopCheckVisible,
   setChooseShelfId,
   shelfData,
 }) => {
+  const params = useParams();
+  const shopId = params.shopId;
+  const matchedShelf = shelfData?.find((item : ShelfData) => item.branch_code === Number(shopId))?.shelves
+  
+  // useEffect(() => {
+  //   console.log("matchedShelfLayout", matchedShelf);
+  // }, [matchedShelf]);
+
   return (
     <>
-      <div className="border border-gray-400 rounded-lg pb-8">
-        <div className="m-4 border border-black justify-center items-center flex py-2">
+      <div className="p-8 bg-gradient-to-r from-blue-500 to-blue-900 text-white rounded-3xl">
+        <div className="border-x border-t border-white">
+        <div className="border border-white justify-center items-center flex py-2">
           <div>Store</div>
         </div>
         <div className="flex justify-between w-full ">
-          <div className="w-1/6 m-4 border border-black justify-center items-center flex">
+          <div className="w-1/6 border border-white justify-center items-center flex">
             <div>Cashier</div>
           </div>
-          <div className="m-4 w-4/6 grid grid-cols-2 gap-8">
-            {shelfData[0].shelves.map((r: any) => (
+          <div className="my-10 mx-4 w-4/6 grid grid-cols-2 gap-8 ">
+            {matchedShelf?.map((r: Shelf) => (
               <Popover
                 content={
                   <>
@@ -76,17 +82,17 @@ const ShopLayout: React.FC<Props> = ({
                 trigger="hover"
               >
                 <div
-                  className={`border border-black flex justify-center items-center hover:bg-gray-200 rounded-md py-2 ${
-                    r.status === "pending"
-                      ? "border-yellow-400"
-                      : r.status === "rejected"
-                      ? "border-red-400"
-                      : r.status === "approved"
-                      ? "border-green-400"
-                      : ""
+                  className={`border  flex justify-center items-center hover:bg-blue-200 rounded-md py-2 ${
+                    r.status === "Pending"
+                      ? "border-yellow-500"
+                      : r.status === "Rejected"
+                      ? "border-red-500"
+                      : r.status === "Approved"
+                      ? "border-green-500"
+                      : "border-white"
                   }`}
                 >
-                  <div className="border border-black rounded-full w-6 text-center">
+                  <div className="border rounded-full w-6 text-center">
                     {r.no}
                   </div>
                 </div>
@@ -94,13 +100,23 @@ const ShopLayout: React.FC<Props> = ({
             ))}
           </div>
           <div className="flex flex-col items-center w-1/8">
-            <div className="h-full m-4 p-2 border border-black justify-center items-center flex">
+            <div className="h-full m-4 p-2 border border-white justify-center items-center flex">
               <div>Beverage</div>
             </div>
-            <div className="h-full m-4 p-2 border border-black justify-center items-center flex">
+            <div className="h-full m-4 p-2 border border-white justify-center items-center flex">
               <div>Beverage</div>
             </div>
           </div>
+          <div className="border border-white justify-center items-center flex p-2">
+          <div>Store</div>
+        </div>
+        
+        </div>
+        <div className=" justify-between items-center flex ">
+          <div className="w-1/4 border border-white py-2 text-center">Wall</div>
+          <div>IN/OUT</div>
+          <div className="w-2/4 border border-white py-2 text-center">Wall</div>
+        </div>
         </div>
       </div>
     </>

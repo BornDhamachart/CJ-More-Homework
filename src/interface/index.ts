@@ -28,3 +28,13 @@ export interface FilterProps {
     branch_code: number;
     shelves: Shelf[];
   }
+
+  export interface Province {
+    id: number;
+    name_th: string;
+    name_en: string;
+    geography_id: number;
+    created_at: string;
+    updated_at: string | null;
+    deleted_at: string | null;
+}

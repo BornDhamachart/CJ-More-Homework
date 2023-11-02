@@ -1,19 +1,15 @@
-import { useState } from "react";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { AiFillBell, AiFillQuestionCircle } from "react-icons/ai";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   return (
-    <nav className="bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200 opacity-80">
-      <div className="flex flex-wrap items-center justify-between mx-auto p-4">
-        {/* <Link to="/" className="flex items-center">
-          <img
-            src="../../public/cjlogo.jpeg"
-            className="h-8 mr-3"
-            alt="CJ More Logo"
-          />
-          <span className="text-center text-2xl font-semibold">CJ More</span>
-        </Link> */}
+    <nav className="bg-white fixed w-full h-12 z-20 top-0 left-0 border-b border-gray-200 opacity-80 flex justify-end text-xl items-center">
+      <div className="text-gray-600 flex gap-4 mr-8">
+      <button disabled> 
+        <AiFillBell />
+        </button>
+        <button disabled> 
+        <AiFillQuestionCircle />
+        </button>
       </div>
     </nav>
   );
