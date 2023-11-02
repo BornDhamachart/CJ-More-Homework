@@ -44,12 +44,12 @@ const HomePage: React.FC = () => {
         <div>Shops List</div>
         <AiFillShop />
       </div>
-      <div className="flex gap-6 my-6">
-        <div className="border border-gray-300 rounded-xl p-4 w-1/4">
+      <div className="flex flex-wrap md:gap-6 md:my-6 my-2 gap-1">
+        <div className="border border-gray-300 rounded-xl p-4 md:w-1/4 hidden md:inline">
           <div className="text-gray-400">Total branch</div>
           <div className="text-lg font-bold">{shopLocationData?.length}</div>
         </div>
-        <div className="border border-gray-300 rounded-xl p-4 w-1/4">
+        <div className="border border-gray-300 rounded-xl p-4 md:w-1/4">
           <div className="text-gray-400">Total pending</div>
           <div className="text-lg font-bold mb-3">654</div>
           <div className="flex items-center gap-1">
@@ -59,7 +59,7 @@ const HomePage: React.FC = () => {
             <div>58 this week</div>
           </div>
         </div>
-        <div className="border border-gray-300 rounded-xl p-4 w-1/4">
+        <div className="border border-gray-300 rounded-xl p-4 md:w-1/4">
           <div className="text-gray-400">Total done</div>
           <div className="text-lg font-bold mb-3">499</div>
           <div className="flex items-center gap-1">
@@ -78,7 +78,7 @@ const HomePage: React.FC = () => {
           Totals : {shopLocationData?.length}
         </div>
 
-        <div className="overflow-y-auto w-full h-screen grid grid-cols-3 gap-6">
+        <div className="overflow-y-auto w-full h-screen grid md:grid-cols-3 grid-col-1 gap-6">
           {shopLocationData?.map((r: ShopDetail) => (
             <Link to={`shop/${r.code}`}>
               <div className="rounded-xl p-4 cursor-pointer hover:bg-blue-400 h-full shadow-lg">
