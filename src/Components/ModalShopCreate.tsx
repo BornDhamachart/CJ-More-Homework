@@ -45,8 +45,8 @@ const ModalShopCreate: React.FC<Props> = ({
 
   const addPicture = (picture: string, name: string) => {
     const updateShelf = matchedShelf?.map((shelf : Shelf) => {
-      console.log("shelf.no", shelf.no);
-      console.log("chooseShelfId", chooseShelfId);
+      // console.log("shelf.no", shelf.no);
+      // console.log("chooseShelfId", chooseShelfId);
 
       if (shelf.no === chooseShelfId) {
         return {
@@ -59,7 +59,7 @@ const ModalShopCreate: React.FC<Props> = ({
       }
       return shelf;
     });
-    console.log("updateShelf", updateShelf);
+    // console.log("updateShelf", updateShelf);
 
     setShelfData((prevState: ShelfData[]) => {
       return prevState.map((r: ShelfData) => {
@@ -74,16 +74,13 @@ const ModalShopCreate: React.FC<Props> = ({
   };
 
   const handleUploadPicture = () => {
-    const file = inputPicture.file;
-    if (file) {
-      if (file.size < 1 * 1024 * 1024) {
+    if (inputPicture.file) {
+      if (inputPicture.file.size < 1 * 1024 * 1024) {
       const reader = new FileReader();
       reader.onload = function (e: any) {
-        addPicture(e.target.result, file.name);
+        addPicture(e.target.result, inputPicture.file.name);
       };
-      reader.readAsDataURL(file);
-    } else {
-      message.error("Image must smaller than 1 MB!!!")
+      reader.readAsDataURL(inputPicture.file);
     }
   }
   };
@@ -106,7 +103,11 @@ const ModalShopCreate: React.FC<Props> = ({
           maxCount={1}
           beforeUpload={() => false}
           onChange={(e) => {
-            setInputPicture(e);
+            if (e.fileList.length > 0) {
+              setInputPicture(e);
+            } else {
+              setInputPicture(undefined);
+            }
           }}
         >
           <Button icon={<UploadOutlined />}>Upload picture</Button>
@@ -114,7 +115,15 @@ const ModalShopCreate: React.FC<Props> = ({
 
         <div className="mt-10">
           <div className="w-full flex justify-end">
-            <Button onClick={() => handleUploadPicture()}>Save</Button>
+            <Button 
+            onClick={() => {
+              if (inputPicture) {
+              handleUploadPicture();
+              } else {
+                message.error("Please upload image!")
+              }
+            }}
+              >Save</Button>
           </div>
         </div>
       </>

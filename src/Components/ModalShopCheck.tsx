@@ -80,18 +80,18 @@ const ModalShopCheck: React.FC<Props> = ({
       destroyOnClose
     >
       <>
-        <div className="flex justify-center">
+      <div className="flex justify-center">
           <Image
-            width={"75%"}
-            height={"100%"}
+            width={"400px"}
+            height={"300px"}
             src={
               matchedShelf?.filter((r) => r.no === chooseShelfId)[0]
                 ?.picture_url
             }
             preview={false}
           />
-        </div>
-        <div className="mt-1">
+          </div>
+        <div className="mt-1 w-full text-center text-gray-400">
           Upload date :{" "}
           {
             matchedShelf?.filter((r) => r.no === chooseShelfId)[0]
@@ -110,11 +110,11 @@ const ModalShopCheck: React.FC<Props> = ({
           />
         </div>
         <div className="flex justify-center w-full gap-4 mt-6">
-          <Button className="bg-green-400 w-1/2" onClick={() => approve()}>
-            Approve
-          </Button>
-          <Button className="bg-red-400 w-1/2" onClick={() => reject()}>
+        <Button className="border border-gray-400  hover:bg-red-200 w-1/2 hover:!border-red-300" onClick={() => reject()}>
             Reject
+          </Button>
+          <Button className="border border-green-500 text-green-500 hover:bg-green-200 w-1/2 hover:!border-green-500" onClick={() => approve()}>
+            Approve
           </Button>
         </div>
       </>
