@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import shopLocation from "../Data/ShopLocation.json";
+import shopLocation from "../Data/shopLocation.json";
 import { Link } from "react-router-dom";
 import { ShopDetail } from "../interface";
 import { MdLocationPin } from "react-icons/md";
@@ -18,18 +18,18 @@ const HomePage: React.FC = () => {
     if (filters.province !== "" && filters.name !== "") {
       setShopLocationData(
         shopLocation?.filter(
-          (r) =>
+          (r:ShopDetail) =>
             r.province === Number(filters.province) &&
             r.branch.includes(filters.name)
         )
       );
     } else if (filters.province !== "" && filters.name === "") {
       setShopLocationData(
-        shopLocation?.filter((r) => r.province === Number(filters.province))
+        shopLocation?.filter((r:ShopDetail) => r.province === Number(filters.province))
       );
     } else if (filters.province === "" && filters.name !== "") {
       setShopLocationData(
-        shopLocation?.filter((r) => r.branch.includes(filters.name))
+        shopLocation?.filter((r:ShopDetail) => r.branch.includes(filters.name))
       );
     } else {
       setShopLocationData(shopLocation);

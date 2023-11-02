@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Form, Input, Select } from "antd";
-import provinceCode from "../Data/ProvinceCode.json";
+import provinceCode from "../Data/provinceCode.json";
 import { FilterProps, Province } from "../interface";
 import { BiSearchAlt } from "react-icons/bi";
 
@@ -52,7 +52,7 @@ const Search: React.FC<Props> = ({ setFilters }) => {
             allowClear
             showSearch
             filterOption={(input, option) =>
-              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+              (option?.label ?? "").includes(input)
             }
             optionFilterProp="children"
             options={provinceCode?.map((r: Province) => ({

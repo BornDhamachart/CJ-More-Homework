@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import shopLocation from "../Data/ShopLocation.json";
+import shopLocation from "../Data/shopLocation.json";
 import ShopLayout from "../Components/ShopLayout";
 import { MdLocationPin } from "react-icons/md";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
@@ -8,7 +8,7 @@ import Map from "../Components/Map";
 import { Image } from "antd";
 import ModalShopCheck from "../Components/ModalShopCheck";
 import ModalShopCreate from "../Components/ModalShopCreate";
-import { ShelfData } from "../interface";
+import { ShelfData, ShopDetail } from "../interface";
 
 const Shop: React.FC = () => {
   const params = useParams();
@@ -19,7 +19,7 @@ const Shop: React.FC = () => {
   const [chooseShelfId, setChooseShelfId] = useState("");
   const [isSubmitFinished, setIsSubmitFinished] = useState(false);
   const [shelfData, setShelfData] = useState<ShelfData[]>([]);
-  const shopDetail = shopLocation?.filter((r) => r.code === Number(shopId))[0]
+  const shopDetail = shopLocation?.filter((r: ShopDetail) => r.code === Number(shopId))[0]
   const newShelfData: ShelfData = {
     branch_code: Number(shopId),
     shelves: [
