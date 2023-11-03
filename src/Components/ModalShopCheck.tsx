@@ -9,7 +9,7 @@ interface Props {
   chooseShelfId: string;
   shelfData: ShelfData[];
   setShelfData: React.Dispatch<React.SetStateAction<any>>;
-  setIsSubmitFinished: React.Dispatch<React.SetStateAction<boolean>>
+  setIsSubmitFinished: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ModalShopCheck: React.FC<Props> = ({
@@ -18,13 +18,15 @@ const ModalShopCheck: React.FC<Props> = ({
   chooseShelfId,
   shelfData,
   setShelfData,
-  setIsSubmitFinished
+  setIsSubmitFinished,
 }) => {
   const { TextArea } = Input;
   const [inputComment, setInputComment] = useState("");
   const params = useParams();
   const shopId = params.shopId;
-  const matchedShelf = shelfData?.find((item : ShelfData) => item.branch_code === Number(shopId))?.shelves
+  const matchedShelf = shelfData?.find(
+    (item: ShelfData) => item.branch_code === Number(shopId)
+  )?.shelves;
 
   const approve = () => {
     const updateShelf = matchedShelf?.map((shelf) => {
@@ -80,7 +82,7 @@ const ModalShopCheck: React.FC<Props> = ({
       destroyOnClose
     >
       <>
-      <div className="flex justify-center max-h-80 overflow-auto">
+        <div className="flex justify-center max-h-80 overflow-auto">
           <Image
             width={"100%"}
             height={"100%"}
@@ -90,7 +92,7 @@ const ModalShopCheck: React.FC<Props> = ({
             }
             preview={false}
           />
-          </div>
+        </div>
         <div className="mt-1 w-full text-center text-gray-400">
           Upload date :{" "}
           {
@@ -102,18 +104,25 @@ const ModalShopCheck: React.FC<Props> = ({
           <TextArea
             placeholder="Comment"
             autoSize={{ minRows: 3, maxRows: 6 }}
-            defaultValue={ matchedShelf?.filter((r) => r.no === chooseShelfId)[0]
-              ?.comment}
+            defaultValue={
+              matchedShelf?.filter((r) => r.no === chooseShelfId)[0]?.comment
+            }
             onChange={(e) => {
               setInputComment(e.target.value);
             }}
           />
         </div>
         <div className="flex justify-center w-full gap-4 mt-6">
-        <Button className="border border-gray-400  hover:bg-red-200 w-1/2 hover:!border-red-300" onClick={() => reject()}>
+          <Button
+            className="border border-gray-400  hover:bg-red-200 w-1/2 hover:!border-red-300"
+            onClick={() => reject()}
+          >
             Reject
           </Button>
-          <Button className="border border-green-500 text-green-500 hover:bg-green-200 w-1/2 hover:!border-green-500" onClick={() => approve()}>
+          <Button
+            className="border border-green-500 text-green-500 hover:bg-green-200 w-1/2 hover:!border-green-500"
+            onClick={() => approve()}
+          >
             Approve
           </Button>
         </div>

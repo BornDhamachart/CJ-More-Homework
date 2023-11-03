@@ -12,7 +12,7 @@ interface Props {
   chooseShelfId: string;
   shelfData: ShelfData[];
   setShelfData: React.Dispatch<React.SetStateAction<any>>;
-  setIsSubmitFinished: React.Dispatch<React.SetStateAction<boolean>>
+  setIsSubmitFinished: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ModalShopCreate: React.FC<Props> = ({
@@ -21,30 +21,36 @@ const ModalShopCreate: React.FC<Props> = ({
   chooseShelfId,
   shelfData,
   setShelfData,
-  setIsSubmitFinished
+  setIsSubmitFinished,
 }) => {
   const [inputPicture, setInputPicture] = useState<any>();
   const params = useParams();
   const shopId = params.shopId;
-  const matchedShelf = shelfData?.find((item : ShelfData) => item.branch_code === Number(shopId))?.shelves
+  const matchedShelf = shelfData?.find(
+    (item: ShelfData) => item.branch_code === Number(shopId)
+  )?.shelves;
 
-  let fileList : UploadFile[] = [];
+  let fileList: UploadFile[] = [];
 
   if (
-    !!(matchedShelf?.filter((r:Shelf) => r.no === chooseShelfId)[0]?.picture_url) && !!(matchedShelf?.filter((r:any) => r.no === chooseShelfId)[0]?.picture_name)
+    !!matchedShelf?.filter((r: Shelf) => r.no === chooseShelfId)[0]
+      ?.picture_url &&
+    !!matchedShelf?.filter((r: any) => r.no === chooseShelfId)[0]?.picture_name
   ) {
     fileList = [
       {
         uid: "1",
-        name: matchedShelf?.filter((r:Shelf) => r.no === chooseShelfId)[0]?.picture_name,
+        name: matchedShelf?.filter((r: Shelf) => r.no === chooseShelfId)[0]
+          ?.picture_name,
         status: "done",
-        url: matchedShelf?.filter((r:Shelf) => r.no === chooseShelfId)[0]?.picture_url,
+        url: matchedShelf?.filter((r: Shelf) => r.no === chooseShelfId)[0]
+          ?.picture_url,
       },
     ];
   }
 
   const addPicture = (picture: string, name: string) => {
-    const updateShelf = matchedShelf?.map((shelf : Shelf) => {
+    const updateShelf = matchedShelf?.map((shelf: Shelf) => {
       // console.log("shelf.no", shelf.no);
       // console.log("chooseShelfId", chooseShelfId);
 
@@ -70,19 +76,19 @@ const ModalShopCreate: React.FC<Props> = ({
       });
     });
     setIsModalShopCreateVisible(false);
-    setIsSubmitFinished(true)
+    setIsSubmitFinished(true);
   };
 
   const handleUploadPicture = () => {
     if (inputPicture.file) {
       if (inputPicture.file.size < 1 * 1024 * 1024) {
-      const reader = new FileReader();
-      reader.onload = function (e: any) {
-        addPicture(e.target.result, inputPicture.file.name);
-      };
-      reader.readAsDataURL(inputPicture.file);
+        const reader = new FileReader();
+        reader.onload = function (e: any) {
+          addPicture(e.target.result, inputPicture.file.name);
+        };
+        reader.readAsDataURL(inputPicture.file);
+      }
     }
-  }
   };
 
   return (
@@ -115,15 +121,17 @@ const ModalShopCreate: React.FC<Props> = ({
 
         <div className="mt-10">
           <div className="w-full flex justify-end">
-            <Button 
-            onClick={() => {
-              if (inputPicture) {
-              handleUploadPicture();
-              } else {
-                message.error("Please upload image!")
-              }
-            }}
-              >Save</Button>
+            <Button
+              onClick={() => {
+                if (inputPicture) {
+                  handleUploadPicture();
+                } else {
+                  message.error("Please upload image!");
+                }
+              }}
+            >
+              Save
+            </Button>
           </div>
         </div>
       </>

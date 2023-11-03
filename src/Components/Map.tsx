@@ -13,24 +13,21 @@ const Map: React.FC<Props> = ({ shopDetail }) => {
   };
 
   const markPosition = {
-    lat : shopDetail.lat,
-    lng: shopDetail.lng
+    lat: shopDetail.lat,
+    lng: shopDetail.lng,
   };
 
   return (
     <>
-        <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLEMAP_API_KEY}>
-          <GoogleMap
-            mapContainerStyle={containerStyle}
-            zoom={16}
-            center={markPosition}
-          >
-            <MarkerF
-              key={shopDetail.code}
-              position={markPosition}
-            />
-          </GoogleMap>
-        </LoadScript>
+      <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLEMAP_API_KEY}>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          zoom={16}
+          center={markPosition}
+        >
+          <MarkerF key={shopDetail.code} position={markPosition} />
+        </GoogleMap>
+      </LoadScript>
     </>
   );
 };

@@ -110,15 +110,15 @@ const Shop: React.FC = () => {
     <>
       <div className="lg:flex bg-gray-100 gap-6 pt-2 lg:pt-0 px-2 lg:px-0">
         <div className="lg:w-1/2 w-full lg:flex flex-col gap-4 lg:py-8 ">
-          <div className="w-full text-center rounded-xl bg-white lg:mx-8 py-4 lg:h-1/2 items-center flex">
-            <div>
-            <div className="font-bold text-2xl">{shopDetail.branch}</div>
-            <div className="flex mt-2 gap-1 justify-center px-10">
-              <div className="text-xl mt-1 text-gray-500">
-                <MdLocationPin />
+          <div className="w-full rounded-xl bg-white lg:mx-8 py-4 lg:h-1/2 items-center flex">
+            <div className="w-full text-center">
+              <div className="font-bold text-2xl">{shopDetail.branch}</div>
+              <div className="flex mt-2 gap-1 justify-center px-10">
+                <div className="text-xl mt-1 text-gray-500">
+                  <MdLocationPin />
+                </div>
+                <div className="text-md">{shopDetail.address}</div>
               </div>
-              <div className="text-md">{shopDetail.address}</div>
-            </div>
             </div>
           </div>
           <div className="overflow-hidden lg:mx-8 my-2 lg:my-0 w-full lg:h-1/2 h-48 rounded-xl border border-gray-200">
