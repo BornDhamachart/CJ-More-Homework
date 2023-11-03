@@ -38,7 +38,7 @@ const Search: React.FC<Props> = ({ setFilters }) => {
       autoComplete="off"
     >
       <div className="md:flex w-full md:gap-4">
-        <div className="text-2xl pt-1 hidden md:inline">
+        <div className="text-2xl pt-1 hidden md:block">
           <BiSearchAlt />
         </div>
         <Form.Item

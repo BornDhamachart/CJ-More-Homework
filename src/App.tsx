@@ -4,12 +4,11 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./Pages/HomePage";
 import Shop from "./Pages/Shop";
 import Sidebar from "./Components/Sidebar";
-import Footer from "./Components/Footer";
 
 function App() {
   return (
     <>
-      <div className="pt-12 pl-16">
+      <div className="pt-12 md:pl-16 pl-10">
         <Navbar />
         <Sidebar />
         <Routes>
@@ -17,7 +16,6 @@ function App() {
           <Route path="shop/:shopId" element={<Shop />} />
           <Route path="*" element={<>404 Not found</>} />
         </Routes>
-        <Footer />
       </div>
     </>
   );

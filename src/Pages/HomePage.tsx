@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { ShopDetail } from "../interface";
 import { MdLocationPin } from "react-icons/md";
 import Search from "../Components/Search";
-import { AiFillShop, AiOutlineArrowUp } from "react-icons/ai";
+import { AiFillShop } from "react-icons/ai";
+import StatusCard from "../Components/StatusCard";
 
 const HomePage: React.FC = () => {
   const [shopLocationData, setShopLocationData] =
@@ -39,49 +40,22 @@ const HomePage: React.FC = () => {
   }, [filters]);
 
   return (
-    <div className="m-6">
+    <div className="md:m-6 m-2">
       <div className="font-bold text-4xl mb-4 flex gap-4 items-center">
         <div>Shops List</div>
         <AiFillShop />
       </div>
-      <div className="flex flex-wrap md:gap-6 md:my-6 my-2 gap-1">
-        <div className="border border-gray-300 rounded-xl p-4 md:w-1/4 hidden md:inline">
-          <div className="text-gray-400">Total branch</div>
-          <div className="text-lg font-bold">{shopLocationData?.length}</div>
-        </div>
-        <div className="border border-gray-300 rounded-xl p-4 md:w-1/4">
-          <div className="text-gray-400">Total pending</div>
-          <div className="text-lg font-bold mb-3">654</div>
-          <div className="flex items-center gap-1">
-            <div className="text-blue-500 text-xl">
-              <AiOutlineArrowUp />
-            </div>
-            <div>58 this week</div>
-          </div>
-        </div>
-        <div className="border border-gray-300 rounded-xl p-4 md:w-1/4">
-          <div className="text-gray-400">Total done</div>
-          <div className="text-lg font-bold mb-3">499</div>
-          <div className="flex items-center gap-1">
-            <div className="text-blue-500 text-xl">
-              <AiOutlineArrowUp />
-            </div>
-            <div>28 this week</div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <Search setFilters={setFilters} />
-      </div>
+      <StatusCard shopLocationData={shopLocationData} />
+      <Search setFilters={setFilters} />
       <div className="border border-gray-200 rounded-lg p-4">
         <div className="w-full text-right px-4 pb-2">
           Totals : {shopLocationData?.length}
         </div>
 
-        <div className="overflow-y-auto w-full h-screen grid md:grid-cols-3 grid-col-1 gap-6">
+        <div className="overflow-y-auto w-full h-screen grid md:grid-cols-2 lg:grid-cols-3 grid-col-1 gap-6">
           {shopLocationData?.map((r: ShopDetail) => (
             <Link to={`shop/${r.code}`}>
-              <div className="rounded-xl p-4 cursor-pointer hover:bg-blue-400 h-full shadow-lg">
+              <div className="rounded-xl p-4 cursor-pointer hover:bg-blue-400 w-full h-36 shadow-lg">
                 <div className="flex justify-between gap-1">
                   <div className="font-bold text-lg">{r.branch}</div>
                   <div className="rounded-lg w-1/3 text-center text-sm p-1 h-1/5 text-yellow-500 border border-yellow-500">

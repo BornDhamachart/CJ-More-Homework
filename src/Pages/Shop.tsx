@@ -80,7 +80,7 @@ const Shop: React.FC = () => {
 
     if (localStorageData) {
       const parsedData = JSON.parse(localStorageData);
-      const findData = parsedData.find(
+      const findData = parsedData?.find(
         (item: ShelfData) => item.branch_code === newShelfData.branch_code
       );
 
@@ -108,9 +108,9 @@ const Shop: React.FC = () => {
 
   return (
     <>
-      <div className="flex bg-gray-100 gap-6">
-        <div className="w-1/2 flex flex-col gap-4 py-8">
-          <div className="w-full text-center rounded-xl bg-white mx-8 py-4">
+      <div className="lg:flex bg-gray-100 gap-6 pt-2 lg:pt-0 px-2 lg:px-0">
+        <div className="lg:w-1/2 w-full lg:flex flex-col gap-4 lg:py-8 ">
+          <div className="w-full text-center rounded-xl bg-white lg:mx-8 py-4 lg:h-1/2">
             <div className="font-bold text-2xl">{shopDetail.branch}</div>
             <div className="flex mt-2 gap-1 justify-center px-10">
               <div className="text-xl mt-1 text-gray-500">
@@ -119,11 +119,11 @@ const Shop: React.FC = () => {
               <div className="text-md">{shopDetail.address}</div>
             </div>
           </div>
-          <div className="overflow-hidden mx-8  w-full h-4/5 rounded-xl border border-gray-200">
+          <div className="overflow-hidden lg:mx-8 my-2 lg:my-0 w-full lg:h-1/2 h-48 rounded-xl border border-gray-200">
             <Map shopDetail={shopDetail} />
           </div>
         </div>
-        <div className="w-1/2 m-8">
+        <div className="lg:w-1/2 w-full lg:m-8">
           <Image
             width={"100%"}
             height={"100%"}
@@ -134,17 +134,12 @@ const Shop: React.FC = () => {
         </div>
       </div>
 
-      <div className="m-8">
-        <div className="text-2xl font-bold w-full text-center mb-4 text-gray-500">
-          SHOP LAYOUT
-        </div>
-        <ShopLayout
-          shelfData={shelfData}
-          setIsModalShopCheckVisible={setIsModalShopCheckVisible}
-          setIsModalShopCreateVisible={setIsModalShopCreateVisible}
-          setChooseShelfId={setChooseShelfId}
-        />
-      </div>
+      <ShopLayout
+        shelfData={shelfData}
+        setIsModalShopCheckVisible={setIsModalShopCheckVisible}
+        setIsModalShopCreateVisible={setIsModalShopCreateVisible}
+        setChooseShelfId={setChooseShelfId}
+      />
       <ModalShopCheck
         shelfData={shelfData}
         setShelfData={setShelfData}

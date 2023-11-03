@@ -80,10 +80,10 @@ const ModalShopCheck: React.FC<Props> = ({
       destroyOnClose
     >
       <>
-      <div className="flex justify-center">
+      <div className="flex justify-center max-h-80 overflow-auto">
           <Image
-            width={"400px"}
-            height={"300px"}
+            width={"100%"}
+            height={"100%"}
             src={
               matchedShelf?.filter((r) => r.no === chooseShelfId)[0]
                 ?.picture_url
